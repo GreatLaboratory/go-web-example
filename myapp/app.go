@@ -204,7 +204,7 @@ func NewHTTPHandler() http.Handler {
 	mux.HandleFunc("/bar", barHandler)
 	mux.Handle("/foo", &fooHandler{})
 	mux.HandleFunc("/uploads", uploadsHandler)
-	mux.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("public")))) // mux로 하려면 이렇게 굉장히 까다롭게 경로를 지정해줘야 한다.
+	mux.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("public"))))
 	mux.HandleFunc("/users", getAllUserInfoHandler).Methods("GET")
 	mux.HandleFunc("/user", createUserHandler).Methods("POST")
 	mux.HandleFunc("/user", updateUserHandler).Methods("PUT")
